@@ -1,0 +1,25 @@
+# Arquivos de estado do Terraform (Contém segredos e são pesados)
+*.tfstate
+*.tfstate.*
+
+# Pasta de binários e provedores (Muito pesada, o 'terraform init' baixa ela de novo)
+.terraform/
+
+# Arquivos de variáveis sensíveis (Onde você guarda suas chaves e senhas)
+*.tfvars
+*.tfvars.json
+
+# Arquivos de log e crash
+*.log
+crash.log
+
+# Arquivos de plano (Se você salvar o plan em arquivo, não deve subir ao git)
+*.tfplan
+
+# Chaves privadas geradas localmente (Importante para o seu arquivo .pem)
+*.pem
+
+# Arquivos de sistema e editores
+.DS_Store
+.vscode/
+.idea/
