@@ -20,7 +20,7 @@ resource "aws_iam_role" "ecr_readonly_role" {
 resource "aws_iam_policy" "ecr_readonly_policy" {
   name        = "ECRReadOnlyPolicy"
   description = "Permite que a EC2 de um pull no ECR"
-  policy      = jsonencode({
+  policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
