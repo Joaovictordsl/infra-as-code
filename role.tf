@@ -52,6 +52,6 @@ resource "aws_iam_role_policy_attachment" "attach_readonly" {
 }
 resource "aws_iam_instance_profile" "ec2_profile" {
   name = "ec2-ecr-instance-profile"
-  role = aws_iam_role.ec2_ecr_role.name
+  role = aws_iam_role.ecr_readonly_role.name
 }
 
