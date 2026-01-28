@@ -51,13 +51,10 @@ jobs:
       - name: HashiCorp - Setup Terraform
         uses: hashicorp/setup-terraform@v3.1.2
 
-      - name: Fazer upload da chave para download
-        if: always() # Isso garante que o upload rode mesmo se o Terraform falhar
-        uses: actions/upload-artifact@v4
-        with:
-          name: chave-ssh-ec2
-          path: ./*.pem # Procura qualquer arquivo .pem na pasta raizath: my-terraform-key.pem # Nome que você colocou no 'filename' do Terraform
+      - name: Listar arquivos para Debug
+        run: ls -R # Isso vai mostrar no log exatamente onde o .pem foi parar
 
+     
       - name: Terraform
         run: terraform init 
       
@@ -70,6 +67,13 @@ jobs:
       - name: Terraform apply
         run: terraform apply -auto-approve tfplan.tfout
         if: github.event.inputs.apply == 'true'
+
+      - name: Fazer upload da chave para download
+        if: always() && github.event.inputs.apply == 'true' # FORÇA o upload mesmo se o terraform falhar (quando apply for requisitado)
+        uses: actions/upload-artifact@v4
+        with:
+          name: chave-ssh-ec2
+          path: "**/*.pem" # O "**" procura em todas as subpastas
         
       - name: Plan destroy
         run: terraform plan -destroy -out=tfplan.tfout
