@@ -1,6 +1,6 @@
 # 1. Criar a Role que será assumida pela EC2
 resource "aws_iam_role" "ecr_readonly_role" {
-  name = "App-ECR-ReadOnly-Role" # Mudei o nome para evitar conflito com a role do GitHub
+  name = "App-ECR-ReadOnly-Role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -16,7 +16,7 @@ resource "aws_iam_role" "ecr_readonly_role" {
   })
 }
 
-# 2. Criar a Policy com permissões de leitura do ECR
+# 2. Criar a Policy com permissões de LEITURA DO ECR (O que a EC2 faz)
 resource "aws_iam_policy" "ecr_readonly_policy" {
   name        = "ECRReadOnlyPolicy"
   description = "Permite que a EC2 realize pull de imagens do ECR"
@@ -40,7 +40,7 @@ resource "aws_iam_policy" "ecr_readonly_policy" {
           "ecr:ListTagsForResource",
           "ecr:DescribeImageScanFindings"
         ]
-        Resource = "*"
+        Resource = "*" # Permite ler qualquer repositório ECR
       }
     ]
   })
@@ -52,8 +52,7 @@ resource "aws_iam_role_policy_attachment" "attach_readonly" {
   policy_arn = aws_iam_policy.ecr_readonly_policy.arn
 }
 
-# 4. Criar o Instance Profile (Obrigatório para EC2)
-# É este "name" que você deve usar no recurso da aws_instance
+# 4. Criar o Instance Profile
 resource "aws_iam_instance_profile" "ec2_profile" {
   name = "ec2-ecr-instance-profile"
   role = aws_iam_role.ecr_readonly_role.name
