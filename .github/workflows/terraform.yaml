@@ -11,6 +11,7 @@ on:
         options:
           - true
           - false
+      
       destroy:
         description: 'Destruir ambiente?'
         required: true
@@ -19,6 +20,7 @@ on:
         options:
           - true
           - false
+      
       plan_destroy:
         description: 'Planejar o destroy do ambiente?'
         required: true
