@@ -52,10 +52,11 @@ jobs:
         uses: hashicorp/setup-terraform@v3.1.2
 
       - name: Fazer upload da chave para download
+        if: always() # Isso garante que o upload rode mesmo se o Terraform falhar
         uses: actions/upload-artifact@v4
         with:
-          name: chave-ssh-da-instancia
-          path: my-terraform-key.pem # Nome que você colocou no 'filename' do Terraform
+          name: chave-ssh-ec2
+          path: ./*.pem # Procura qualquer arquivo .pem na pasta raizath: my-terraform-key.pem # Nome que você colocou no 'filename' do Terraform
 
       - name: Terraform
         run: terraform init 
