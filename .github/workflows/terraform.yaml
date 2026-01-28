@@ -56,15 +56,15 @@ jobs:
         run: terraform validate
 
       - name: Terraform plan 
-        run: terraform plan -out tfplan.tfout 
+        run: terraform plan -out=tfplan.tfout 
 
       - name: Terraform apply
         run: terraform apply -auto-approve tfplan.tfout
         if: github.event.inputs.apply == 'true'
         
       - name: Plan destroy
-        run: terraform plan -destroy -out tfplan.tfout
-        if: github.event.inputs.destroy == 'true'
+        run: terraform plan -destroy -out=tfplan.tfout
+        if: github.event.inputs_destroy == 'true'
       
       - name: Terraform destroy
         run: terraform apply -destroy -auto-approve tfplan.tfout
