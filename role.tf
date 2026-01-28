@@ -1,6 +1,6 @@
 # 1. A Role em si (Define que o EC2 pode usar esta identidade)
 resource "aws_iam_role" "ecr_readonly_role" {
-  name = "ec2-ecr-readonly-role"
+  name = "Github-infra-Role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
